@@ -5,6 +5,8 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const db = require('./config/database');
+const authRoutes = require('./routes/auth');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -14,7 +16,10 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Health check route
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Health check
 app.get('/api/health', async (req, res) => {
   try {
     await db.raw('SELECT 1');
