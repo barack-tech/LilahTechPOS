@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
 
+const db = require('./config/database');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -14,8 +15,21 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Health check route
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'LilahTechPOS API is running' });
+app.get('/api/health', async (req, res) => {
+  try {
+    await db.raw('SELECT 1');
+    res.json({ 
+      status: 'OK', 
+      message: 'LilahTechPOS API is running',
+      database: 'Connected ✅'
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: 'ERROR', 
+      message: 'Database connection failed',
+      error: error.message
+    });
+  }
 });
 
 // Start server
