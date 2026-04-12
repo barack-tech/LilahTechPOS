@@ -1,0 +1,12 @@
+{
+  "name": "lilahtechpos",
+  "version": "1.0.0",
+  "description": "LilahTech Point of Sale System",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "frontend": "npm start --prefix frontend",
+    "backend": "npm run dev --prefix backend",
+    "dev": "npm run frontend & npm run backend"
+  }
+}
